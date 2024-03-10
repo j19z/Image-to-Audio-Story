@@ -75,8 +75,9 @@ def main():
         text = img2text(uploaded_file.name)
         story = create_story(text)
         text2speach(story)
-
-        with st.expander('Story pic'):
+        with st.expander('Image description:'):
+            st.write(text)
+        with st.expander('Story:'):
             st.write(story)
         st.audio('audio.flac')
 
