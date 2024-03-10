@@ -38,14 +38,20 @@ def create_story(text):
     API_URL = "https://api-inference.huggingface.co/models/HuggingFaceH4/zephyr-7b-beta"
     def query(payload):
         response = requests.post(API_URL, headers=headers, json=payload)
+        print(response.json())
         return response.json()
     
     input_prompt = f'Create a short 50 word story using this as an input: "{text}"'
     output = query({
         "inputs": input_prompt,
     })
-
-    generated_text = output[0]['generated_text']
+    
+    try:
+        generated_text = output[0]['generated_text']
+    except KeyError:
+        print('KeyError encountered when accessing "generated_text"')
+        generated_text = 'KeyError encountered when accessing "generated_text"'
+    
     return generated_text.replace(input_prompt, "").strip()
 
 
